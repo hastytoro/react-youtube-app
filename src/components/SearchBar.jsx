@@ -7,7 +7,8 @@ class SearchBar extends React.Component {
     e.preventDefault();
     // HERE WE MAKE SURE TO INVOKE A CALLBACK FROM PARENT COMPONENT.
     // We can tell our parent App that the user just submitted a form and that
-    // they probably want to initiate a new search of the youtube API.
+    // they probably want to initiate a new search on its managed state.
+    this.props.onFormSubmit(this.state.term);
   };
   onInputChange = (e) => {
     this.setState({ term: e.target.value });
