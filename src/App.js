@@ -9,6 +9,10 @@ import youtube from "./apis/youtube";
 class App extends React.Component {
   state = { videos: [], selectedVideo: null };
 
+  componentDidMount() {
+    this.onTermSubmit("racing");
+  }
+
   // We use this callback prop passed down to our child component that collects
   // inputs state "a searched term" that App can then pass into a API request.
   onTermSubmit = async (term) => {
@@ -17,7 +21,11 @@ class App extends React.Component {
     const response = await youtube.get("/search", {
       params: { q: term },
     });
-    this.setState({ videos: response.data.items });
+    const { items } = response.data;
+    this.setState({
+      videos: items,
+      selectedVideo: items[0],
+    });
   };
   // Again here we adding another callback method to the App component.
   // We pass a prop as reference down first to VideoList then to VideoItem.

@@ -3,22 +3,21 @@ import "./VideoDetail.css";
 
 const VideoDetail = ({ video }) => {
   if (!video) {
-    return <div>Loading...</div>;
+    return <div className="ui active centered inline loader"></div>;
   }
-  const { thumbnails, title, description } = video.snippet;
+  const { title, description } = video.snippet;
   const { videoId } = video.id;
   const videoSrc = `https://www.youtube.com/embed/${videoId}`;
   return (
-    <div>
+    <>
       <div className="ui embed">
         <iframe src={videoSrc} title="video-player" />
       </div>
-      <div className="ui segment">
+      <div className="ui segment raised">
         <h4 className="ui header">{title}</h4>
         <p>{description}</p>
-        {/* <img src={thumbnails.high.url} alt={title} /> */}
       </div>
-    </div>
+    </>
   );
 };
 
