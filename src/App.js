@@ -4,6 +4,7 @@ import SearchBar from "./components/SearchBar";
 import youtube from "./apis/youtube";
 
 class App extends React.Component {
+  state = { videos: [] };
   // We use this callback prop passed down to our child component that collects
   // inputs state "a searched term" that App can then pass into a API request.
   onTermSubmit = async (term) => {
@@ -12,12 +13,14 @@ class App extends React.Component {
     // The term we using in our youtube API query is coming from child state.
     // Check network tab in DevTools to determine if fetch request worked!
     const response = await youtube.get("/search", {
-      params: {
-        q: term,
-      },
+      params: { q: term },
     });
-    console.log(response.data);
+    this.setState({ videos: response.data.items });
   };
+
+  componentDidUpdate() {
+    console.log(this.state);
+  }
 
   render() {
     return (
