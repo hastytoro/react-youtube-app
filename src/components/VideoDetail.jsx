@@ -1,12 +1,25 @@
 import React from "react";
-import "./VideoItem.css";
+import "./VideoDetail.css";
 
-const VideoItem = (props) => {
+const VideoDetail = ({ video }) => {
+  if (!video) {
+    return <div>Loading...</div>;
+  }
+  const { thumbnails, title, description } = video.snippet;
+  const { videoId } = video.id;
+  const videoSrc = `https://www.youtube.com/embed/${videoId}`;
   return (
     <div>
-      <p>Video Detail</p>
+      <div className="ui embed">
+        <iframe src={videoSrc} title="video-player" />
+      </div>
+      <div className="ui segment">
+        <h4 className="ui header">{title}</h4>
+        <p>{description}</p>
+        {/* <img src={thumbnails.high.url} alt={title} /> */}
+      </div>
     </div>
   );
 };
 
-export default VideoItem;
+export default VideoDetail;

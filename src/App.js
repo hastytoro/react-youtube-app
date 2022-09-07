@@ -22,19 +22,27 @@ class App extends React.Component {
   // Again here we adding another callback method to the App component.
   // We pass a prop as reference down first to VideoList then to VideoItem.
   // This will be called back with information of the selected item.
-  onVideoSelect = (e) => {
-    console.log(e);
+  onVideoSelect = (video) => {
+    this.setState({ selectedVideo: video });
   };
 
   render() {
     return (
       <div className="ui container">
         <SearchBar onTermSubmit={this.onTermSubmit} />
-        <VideoList
-          onVideoSelect={this.onVideoSelect}
-          videos={this.state.videos}
-        />
-        <VideoDetail />
+        <div className="ui grid">
+          <div className="ui row">
+            <div className="eleven wide column">
+              <VideoDetail video={this.state.selectedVideo} />
+            </div>
+            <div className="five wide column">
+              <VideoList
+                onVideoSelect={this.onVideoSelect}
+                videos={this.state.videos}
+              />
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
