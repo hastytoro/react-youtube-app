@@ -4,32 +4,19 @@ import SearchBar from "./components/SearchBar";
 import VideoList from "./components/VideoList";
 import VideoDetail from "./components/VideoDetail";
 
-import youtube from "./apis/youtube";
+import useVideos from "./hooks/useVideos";
 
 const App = () => {
-  const [videos, setVideos] = useState([]);
   const [selectedVideo, setSelectedVideo] = useState(null);
-
-  // We use this callback prop passed down to our child component that collects
-  // inputs state "a searched term" that App can then pass into a API request.
-  // Retrieve `term` from child input component <SearchBar />.
-  // The term we using in our youtube API query is coming from child state.
-  const onTermSubmit = async (term) => {
-    const response = await youtube.get("/search", {
-      params: { q: term },
-    });
-    const { items } = response.data;
-    setVideos(items);
-    setSelectedVideo(items[0]);
-  };
+  const [videos, search] = useVideos("skysports");
 
   useEffect(() => {
-    onTermSubmit("skysports");
-  }, []);
+    setSelectedVideo(videos[0]);
+  }, [videos]);
 
   return (
     <div className="ui container">
-      <SearchBar onTermSubmit={onTermSubmit} />
+      <SearchBar onTermSubmit={search} />
       <div className="ui grid">
         <div className="ui row">
           <div className="eleven wide column">
