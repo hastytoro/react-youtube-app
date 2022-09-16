@@ -1,37 +1,33 @@
-import React from "react";
+import React, { useState } from "react";
 
-class SearchBar extends React.Component {
-  state = { term: "" };
+const SearchBar = (props) => {
+  const [term, setTerm] = useState("");
 
-  onFormSubmit = (e) => {
+  const onSubmit = (e) => {
     e.preventDefault();
-    // HERE WE MAKE SURE TO INVOKE A CALLBACK FROM PARENT COMPONENT.
-    // We can tell our parent App that the user just submitted a form and that
-    // they probably want to initiate a new search on its managed state.
-    this.props.onTermSubmit(this.state.term);
+    props.onTermSubmit(term);
   };
-  onInputChange = (e) => {
-    this.setState({ term: e.target.value });
+  const onInputChange = (e) => {
+    setTerm(e.target.value);
   };
 
-  render() {
-    return (
-      <div className="ui segment raised search-bar">
-        <form className="ui form" onSubmit={this.onFormSubmit}>
-          <div className="field">
-            <div className="ui transparent left icon input">
-              <input
-                onChange={this.onInputChange}
-                value={this.state.term}
-                type="text"
-                placeholder="Video search..."
-              />
-              <i className="search icon"></i>
-            </div>
+  return (
+    <div className="ui segment raised search-bar">
+      <form className="ui form" onSubmit={onSubmit}>
+        <div className="field">
+          <div className="ui transparent left icon input">
+            <input
+              onChange={onInputChange}
+              value={term}
+              type="text"
+              placeholder="Video search..."
+            />
+            <i className="search icon"></i>
           </div>
-        </form>
-      </div>
-    );
-  }
-}
+        </div>
+      </form>
+    </div>
+  );
+};
+
 export default SearchBar;
